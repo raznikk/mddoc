@@ -3,15 +3,19 @@
 #=====
 CP=cp
 RM=rm
-MDDOC=./mddoc
-README=README.md
-
+DIRECTORIES=meta defaults vars tasks handlers files templates
+#=====
+# Do not edit past this point
+#=====
 J2EXT=j2
-SRCDIR=meta defaults vars tasks handlers files templates
+SRCDIR=$(DIRECTORIES)
 YMLEXT=yml
 YAMLEXT=yml
 DISTDIR=dist
 OUTPUTDIR=docs
+
+README=README.md
+MDDOC=./mddoc
 
 SRCS     := $(shell find $(SRCDIR) -name '*.$(YMLEXT)' -or -name '*.$(YAMLEXT)' -or -name '*.$(J2EXT)')
 SRCDIRS  := $(shell find $(SRCDIR) -name '*.$(YMLEXT)' -or -name '*.$(YAMLEXT)' -or -name '*.$(J2EXT)' -exec dirname {} \; | uniq)
