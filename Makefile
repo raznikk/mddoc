@@ -1,22 +1,22 @@
 #=====
 # Makefile
 #=====
-README=README.md
-MDDOC=./mddoc
-RM=rm
 CP=cp
+RM=rm
+MDDOC=./mddoc
+README=README.md
 
-SRCDIR=tasks handlers files templates vars defaults meta
-#SRCDIR=src/tasks src/handlers src/files src/templates src/vars src/defaults src/meta
-DISTDIR=dist
+J2EXT=j2
+SRCDIR=meta defaults vars tasks handlers files templates
 YMLEXT=yml
 YAMLEXT=yml
-J2EXT=j2
-OBJDIR=docs
+DISTDIR=dist
+OUTPUTDIR=docs
 
-SRCS := $(shell find $(SRCDIR) -name '*$(YMLEXT)' -or -name '*$(YAMLEXT)' -or -name '*$(J2EXT)')
-SRCDIRS := $(shell find . -name '*.$(SRCEXT)' -exec dirname {} \; | uniq)
-OBJS := $(patsubst %.$(YMLEXT),$(OBJDIR)/%.md,$(SRCS)) $(patsubst %.$(YAMLEXT),$(OBJDIR)/%.md,$(SRCS)) $(patsubst %.$(J2EXT),$(OBJDIR)/%.md,$(SRCS))
+SRCS     := $(shell find $(SRCDIR) -name '*.$(YMLEXT)' -or -name '*.$(YAMLEXT)' -or -name '*.$(J2EXT)')
+SRCDIRS  := $(shell find $(SRCDIR) -name '*.$(YMLEXT)' -or -name '*.$(YAMLEXT)' -or -name '*.$(J2EXT)' -exec dirname {} \; | uniq)
+OBJS     := $(patsubst %,$(OUTPUTDIR)/%.md,$(SRCS))
+
 
 
 #=====
@@ -31,15 +31,15 @@ dist: builddist
 $(README): builddocs $(OBJS)
 	cat $(OBJS) > $(README)
 
-$(OBJDIR)/%.md: %.$(YMLEXT)
+$(OUTPUTDIR)/%.$(YMLEXT).md: %.$(YMLEXT)
 	touch $@
 	$(MDDOC) $^ > $@
 
-$(OBJDIR)/%.md: %.$(YAMLEXT)
+$(OUTPUTDIR)/%.$(YAMLEXT).md: %.$(YAMLEXT)
 	touch $@
 	$(MDDOC) $^ > $@
 
-$(OBJDIR)/%.md: %.$(J2EXT)
+$(OUTPUTDIR)/%.$(J2EXT).md: %.$(J2EXT)
 	touch $@
 	$(MDDOC) $^ > $@
 
@@ -48,14 +48,15 @@ $(OBJDIR)/%.md: %.$(J2EXT)
 # Alternate targets
 #=====
 .PHONY: test clean
+
 test:
-	@echo "$(SRCDIR)"
-	@echo "$(SRCS)"
-	@echo "$(OBJS)"
+	@echo "SRCS:   $(SRCS)"
+	@echo "SRCDIR: $(SRCDIR)"
+	@echo "OBJS:   $(OBJS)"
 
 clean:
 	$(RM) -fr $(README)
-	$(RM) -fr $(OBJDIR)
+	$(RM) -fr $(OUTPUTDIR)
 
 distclean: clean
 	$(RM) -fr $(DISTDIR)
@@ -73,7 +74,7 @@ builddist:
 define make-doctree
 	for dir in $(SRCDIR); \
 	do \
-		mkdir -p ${OBJDIR}/$$dir; \
+		mkdir -p ${OUTPUTDIR}/$$dir; \
 	done
 endef
 
