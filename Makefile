@@ -6,7 +6,8 @@ MDDOC=./mddoc
 RM=rm
 CP=cp
 
-SRCDIR=src/tasks src/handlers src/files src/templates src/vars src/defaults src/meta
+SRCDIR=tasks handlers files templates vars defaults meta
+#SRCDIR=src/tasks src/handlers src/files src/templates src/vars src/defaults src/meta
 DISTDIR=dist
 YMLEXT=yml
 YAMLEXT=yml
@@ -18,14 +19,17 @@ SRCDIRS := $(shell find . -name '*.$(SRCEXT)' -exec dirname {} \; | uniq)
 OBJS := $(patsubst %.$(YMLEXT),$(OBJDIR)/%.md,$(SRCS)) $(patsubst %.$(YAMLEXT),$(OBJDIR)/%.md,$(SRCS)) $(patsubst %.$(J2EXT),$(OBJDIR)/%.md,$(SRCS))
 
 
+#=====
+# Targets
+#=====
 all: $(README)
-
-$(README): builddocs $(OBJS)
-	cat $(OBJS) > $(README)
 
 dist: builddist
 	$(CP) Makefile dist
 	$(CP) $(MDDOC) dist
+
+$(README): builddocs $(OBJS)
+	cat $(OBJS) > $(README)
 
 $(OBJDIR)/%.md: %.$(YMLEXT)
 	touch $@
@@ -38,6 +42,7 @@ $(OBJDIR)/%.md: %.$(YAMLEXT)
 $(OBJDIR)/%.md: %.$(J2EXT)
 	touch $@
 	$(MDDOC) $^ > $@
+
 
 #=====
 # Alternate targets
@@ -60,6 +65,7 @@ builddocs:
 
 builddist:
 	$(call make-dist)
+
 
 #=====
 # Definitions
