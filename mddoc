@@ -8,4 +8,4 @@ COMMENT_STRING="^#*"
 #=====
 # Get all Markdown lines in the file
 #=====
-cat $1 | egrep ${COMMENT_STRING} | sed -e 's/^#\*[[:space:]]*//' -e '/#/d'
+cat $1 | grep -e "${COMMENT_STRING}" | sed -e 's/^#\*[[:space:]]*//' -e '/#/d' -e '/^---$/d'

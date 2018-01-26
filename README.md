@@ -1,4 +1,3 @@
----
 
 MDDOC
 =====
@@ -29,5 +28,3 @@ So, yml files within the meta directory will be parsed first, followed by defaul
 
 To run the documentation parser, simply run ```make``` at the root of your Ansible role.
 
----
----
