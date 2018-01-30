@@ -3,7 +3,7 @@
 #=====
 # Variables
 #=====
-COMMENT_STRING="^#*"
+COMMENT_STRING="^#\*"
 
 #=====
 # Get all Markdown lines in the file
