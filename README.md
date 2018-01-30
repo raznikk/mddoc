@@ -2,8 +2,6 @@
 MDDOC
 =====
 
-*NOTE:* This project both a proof of concept and a work in progress. It's current incarnation is by no means final. I intend to generate a parser with a more robust language, similar to javadoc.
-
 This project generates documentation from within an ansible role in markdown format. This project was created because I was tired of trying to generate documentation for complicated Ansible roles. It is an incredibly basic parser with a slightly less simple Makefile that generates the README for a project.
 
 Feel free to use this in any project you have.
@@ -28,3 +26,5 @@ So, yml files within the meta directory will be parsed first, followed by defaul
 
 To run the documentation parser, simply run ```make``` at the root of your Ansible role.
 
+---
+---
